@@ -449,6 +449,27 @@
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
+.testimonial-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-forest) color-mix(in srgb, var(--color-line-strong) 55%, transparent);
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+.testimonial-scroll::-webkit-scrollbar {
+  height: 0.65rem;
+}
+
+.testimonial-scroll::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--color-line-strong) 55%, transparent);
+}
+
+.testimonial-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-forest);
+  border-radius: 999px;
+  border: 3px solid var(--color-bone-2);
+}
+
 main, footer, section { position: relative; z-index: 1; }
 
 .tracking-tight,

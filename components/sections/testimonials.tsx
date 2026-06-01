@@ -1,9 +1,24 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 import { Reveal } from "@/components/reveal";
 import { testimonialStories, type TestimonialStory } from "@/lib/testimonials";
 
 export function Testimonials() {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollStories = (direction: -1 | 1) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.scrollBy({
+      left: direction * carousel.clientWidth * 0.86,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="stories"
@@ -30,10 +45,36 @@ export function Testimonials() {
           </Reveal>
         </div>
 
-        <Reveal delay={140}>
-          <div className="-mx-6 snap-x snap-mandatory overflow-x-auto overscroll-x-contain px-6 pb-6">
+        <Reveal delay={140} className="relative">
+          <div className="mb-4 flex items-center justify-end gap-2">
+            <button
+              type="button"
+              aria-label="Previous testimonial"
+              onClick={() => scrollStories(-1)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-[var(--color-paper)] text-[var(--color-ink)] transition-colors hover:bg-[var(--color-canvas)]"
+              style={{ borderColor: "var(--color-line-strong)" }}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next testimonial"
+              onClick={() => scrollStories(1)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-[var(--color-paper)] text-[var(--color-ink)] transition-colors hover:bg-[var(--color-canvas)]"
+              style={{ borderColor: "var(--color-line-strong)" }}
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+
+          <div
+            ref={carouselRef}
+            aria-label="Patient story carousel"
+            tabIndex={0}
+            className="testimonial-scroll -mx-6 overflow-x-auto overscroll-x-contain scroll-smooth px-6 pb-6"
+          >
             <div
-              className="grid auto-cols-[minmax(320px,88vw)] grid-flow-col gap-px overflow-hidden border-y bg-[var(--color-line)] md:auto-cols-[minmax(520px,620px)]"
+              className="grid w-max min-w-full auto-cols-[minmax(300px,calc(100vw-3rem))] grid-flow-col gap-px border-y bg-[var(--color-line)] sm:auto-cols-[minmax(380px,72vw)] md:auto-cols-[minmax(520px,620px)]"
               style={{ borderColor: "var(--color-line)" }}
             >
               {testimonialStories.map((story) => (
