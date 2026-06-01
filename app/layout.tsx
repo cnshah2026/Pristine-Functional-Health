@@ -82,11 +82,8 @@ export const metadata: Metadata = {
     images: [absoluteUrl("/pristine-logo-mark.png")],
   },
   icons: {
-    icon: [
-      { url: "/favicon.png", type: "image/png" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-    shortcut: [{ url: "/favicon.png", type: "image/png" }],
+    icon: [{ url: "/pristine-logo-mark.png", type: "image/png" }],
+    shortcut: [{ url: "/pristine-logo-mark.png", type: "image/png" }],
     apple: [{ url: "/pristine-logo-mark.png", type: "image/png" }],
   },
 };
