@@ -9,7 +9,8 @@ const heroMorphingTexts = ["Root Cause", "Real Solutions", "Lasting Wellness"];
 export function Hero() {
   return (
     <section className="relative flex min-h-[calc(100svh-96px)] items-start overflow-hidden pb-20 pt-8 md:pb-24 md:pt-8 lg:pt-6">
-      <div className="absolute inset-0 z-0 opacity-50 dark:opacity-70" aria-hidden>
+      <div className="hero-mobile-field absolute inset-0 z-0 md:hidden" aria-hidden />
+      <div className="absolute inset-0 z-0 hidden opacity-45 md:block dark:opacity-60" aria-hidden>
         <HeroLiquidEther />
       </div>
       <div

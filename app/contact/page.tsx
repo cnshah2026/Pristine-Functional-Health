@@ -1,6 +1,7 @@
 import { Phone, Mail, Clock } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { CtaBand } from "@/components/sections/cta-band";
+import { FAQSection } from "@/components/sections/faq-section";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -93,34 +94,31 @@ export default function ContactPage() {
           </div>
 
           <Reveal className="mt-20 max-w-[860px]">
-            <form
-              action="mailto:contact@pristinefunctionalhealth.com"
-              method="post"
-              encType="text/plain"
+            <div
               className="border-t pt-8"
               style={{ borderColor: "var(--color-line-strong)" }}
             >
-              <p className="eyebrow mb-6">Send a note</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ContactField label="Your name" id="name" name="name" required />
-                <ContactField label="Email" id="email" name="email" type="email" required />
-              </div>
-              <div className="mt-6">
-                <ContactField label="Subject" id="subject" name="subject" />
-              </div>
-              <div className="mt-6">
-                <label htmlFor="message" className="block font-serif text-[1.35rem] mb-3">
-                  Message
-                </label>
-                <textarea id="message" name="message" rows={6} className="input" required />
-              </div>
-              <button type="submit" className="btn btn-primary mt-7">
-                Send message
-              </button>
-            </form>
+              <p className="eyebrow mb-4">Prefer a direct note?</p>
+              <p className="lede max-w-[52ch]">
+                Email us at{" "}
+                <a
+                  href="mailto:contact@pristinefunctionalhealth.com"
+                  className="underline underline-offset-4 hover:text-[var(--color-forest)]"
+                >
+                  contact@pristinefunctionalhealth.com
+                </a>{" "}
+                with your question, or book the free discovery call if you want
+                the fastest path to a private conversation.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
+
+      <FAQSection
+        eyebrow="Before you reach out"
+        title="The questions people usually ask first."
+      />
 
       <CtaBand
         eyebrow="The fastest way to start"
@@ -128,28 +126,5 @@ export default function ContactPage() {
         subtitle="20 minutes, virtual, free. The most efficient way to find out if we can help — and the lowest possible barrier to getting your real questions answered."
       />
     </>
-  );
-}
-
-function ContactField({
-  label,
-  id,
-  name,
-  type = "text",
-  required,
-}: {
-  label: string;
-  id: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="block font-serif text-[1.35rem] mb-3">
-        {label}
-      </label>
-      <input id={id} name={name} type={type} required={required} className="input" />
-    </div>
   );
 }

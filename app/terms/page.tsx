@@ -15,7 +15,7 @@ const sections = [
   },
   {
     title: "Nature of Services",
-    body: `Pristine Functional Health provides virtual functional health consultations, functional nutrition counseling, and wellness coaching services. These services are educational and supportive in nature. They do not replace diagnosis, treatment, or ongoing care from your licensed medical providers, and they are not a substitute for emergency medical care. Megha Shah is a licensed Physical Therapist (DPT) and Certified Functional Nutritional Counsellor (CFNC). Services are provided within her scope of licensure and certification.`,
+    body: `Pristine Functional Health provides virtual functional health consultations, functional nutrition counseling, and wellness coaching services. These services are educational and supportive in nature. They do not replace diagnosis, treatment, or ongoing care from your licensed medical providers, and they are not a substitute for emergency medical care. Megha Shah is a licensed Physical Therapist (PT) and Certified Functional Nutritional Counsellor (CFNC). Services are provided within her scope of licensure and certification.`,
   },
   {
     title: "Not a Medical Emergency Service",

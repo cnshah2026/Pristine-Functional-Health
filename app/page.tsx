@@ -6,7 +6,10 @@ import { ServicesList } from "@/components/sections/services-list";
 import { Testimonials } from "@/components/sections/testimonials";
 import { AboutPreview } from "@/components/sections/about-preview";
 import { CtaBand } from "@/components/sections/cta-band";
+import { FAQSection } from "@/components/sections/faq-section";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Reveal } from "@/components/reveal";
+import { faqPageJsonLd } from "@/lib/faqs";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -25,6 +28,7 @@ export const metadata = pageMetadata({
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={faqPageJsonLd()} />
       <Hero />
       <ProblemSection />
       <ConditionsList />
@@ -32,6 +36,7 @@ export default function HomePage() {
       <ShopPreview />
       <AboutPreview />
       <Testimonials />
+      <FAQSection />
       <CtaBand
         eyebrow="Book your free 20-minute call"
         title="You do not need a louder plan. You need the right questions."

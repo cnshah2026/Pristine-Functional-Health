@@ -42,7 +42,7 @@ export function AboutPreview() {
             >
               {[
                 "20+ yrs clinical experience",
-                "Physical Therapist (DPT)",
+                "Physical Therapist (PT)",
                 "Cert. Functional Nutritional Counsellor",
                 "1,200+ patients guided",
                 "IFM-aligned methodology",
@@ -85,9 +85,9 @@ function Portrait() {
         alt="Megha Shah, PT, CFNC — Founder of Pristine Functional Health"
         width={852}
         height={1280}
+        sizes="(max-width: 768px) 100vw, 420px"
         className="w-full h-auto object-cover object-top"
         style={{ maxHeight: 520 }}
-        priority
       />
     </div>
   );

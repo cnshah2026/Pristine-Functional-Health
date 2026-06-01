@@ -1,11 +1,27 @@
 "use client"
 
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
 const morphTime = 1.5
 const cooldownTime = 2.25
+const mobileHoldTime = 2600
+
+function useDesktopTextEffect() {
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)")
+    const update = () => setIsDesktop(desktop.matches)
+    update()
+
+    desktop.addEventListener("change", update)
+    return () => desktop.removeEventListener("change", update)
+  }, [])
+
+  return isDesktop
+}
 
 const useMorphingText = (texts: string[]) => {
   const textIndexRef = useRef(0)
@@ -82,6 +98,12 @@ const useMorphingText = (texts: string[]) => {
       else doCooldown()
     }
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (reducedMotion.matches) {
+      doCooldown()
+      return
+    }
+
     animate()
     return () => {
       cancelAnimationFrame(animationFrameId)
@@ -94,6 +116,7 @@ const useMorphingText = (texts: string[]) => {
 interface MorphingTextProps {
   className?: string
   texts: string[]
+  mobileClassName?: string
 }
 
 const Texts: React.FC<Pick<MorphingTextProps, "texts">> = ({ texts }) => {
@@ -136,15 +159,54 @@ const SvgFilters: React.FC = () => (
 export const MorphingText: React.FC<MorphingTextProps> = ({
   texts,
   className,
-}) => (
-  <div
-    className={cn(
-      "relative mx-auto h-16 w-full max-w-3xl text-center font-sans text-[40pt] leading-none font-bold md:h-24 lg:text-[6rem]",
-      className
-    )}
-    style={{ filter: "url(#threshold) blur(0.6px)" }}
-  >
-    <Texts texts={texts} />
-    <SvgFilters />
-  </div>
-)
+  mobileClassName,
+}) => {
+  const [mobileIndex, setMobileIndex] = useState(0)
+  const isDesktop = useDesktopTextEffect()
+
+  useEffect(() => {
+    if (isDesktop) return
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (reducedMotion.matches) return
+
+    const id = window.setInterval(() => {
+      setMobileIndex((index) => (index + 1) % texts.length)
+    }, mobileHoldTime)
+
+    return () => window.clearInterval(id)
+  }, [isDesktop, texts.length])
+
+  return (
+    <>
+      {isDesktop ? (
+        <div
+          className={cn(
+            "relative mx-auto h-16 w-full max-w-3xl text-center font-sans text-[40pt] leading-none font-bold md:h-24 lg:text-[6rem]",
+            className
+          )}
+          style={{ filter: "url(#threshold) blur(0.6px)" }}
+        >
+          <Texts texts={texts} />
+          <SvgFilters />
+        </div>
+      ) : (
+        <div
+          className={cn(
+            "relative mx-auto block h-16 w-full max-w-3xl overflow-hidden text-center font-sans text-[40pt] leading-none font-bold",
+            className,
+            mobileClassName
+          )}
+          aria-live="polite"
+        >
+          <span
+            key={texts[mobileIndex]}
+            className="absolute inset-x-0 top-0 inline-block animate-mobile-morph"
+          >
+            {texts[mobileIndex]}
+          </span>
+        </div>
+      )}
+    </>
+  )
+}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, Linkedin, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Music2 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { conditions } from "@/lib/conditions";
 import { services } from "@/lib/services";
@@ -27,8 +27,11 @@ export function SiteFooter() {
               <SocialIcon href="https://linkedin.com" label="LinkedIn">
                 <Linkedin size={15} />
               </SocialIcon>
-              <SocialIcon href="https://youtube.com" label="YouTube">
-                <Youtube size={15} />
+              <SocialIcon href="https://facebook.com" label="Facebook">
+                <Facebook size={15} />
+              </SocialIcon>
+              <SocialIcon href="https://tiktok.com" label="TikTok">
+                <Music2 size={15} />
               </SocialIcon>
             </div>
           </div>
@@ -72,6 +75,7 @@ export function SiteFooter() {
             <FooterLink href="/blog">Blog</FooterLink>
             <FooterLink href="/new-patient-special">New patient special</FooterLink>
             <FooterLink href="/shop">Shop coming soon</FooterLink>
+            <FooterLink href="/#faq">FAQ</FooterLink>
             <FooterLink href="/book-appointment">Book an appointment</FooterLink>
             <FooterLink href="/contact">Contact</FooterLink>
             <li className="pt-3 mt-2 border-t" style={{ borderColor: "var(--color-line)" }}>

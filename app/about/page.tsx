@@ -206,7 +206,7 @@ export default function AboutPage() {
             className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3"
           >
             {[
-              "Physical Therapist (DPT)",
+              "Physical Therapist (PT)",
               "Certified Functional Nutritional Counsellor (CFNC)",
               "Institute for Functional Medicine — coursework",
               "20+ years clinical experience",
