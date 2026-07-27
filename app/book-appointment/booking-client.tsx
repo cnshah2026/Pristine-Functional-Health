@@ -78,16 +78,11 @@ export function BookingClient() {
               Pick a time that works for you and let's figure out your next step together.
             </p>
             <div
-              className="mt-9 grid max-w-[760px] grid-cols-1 divide-y border-y sm:grid-cols-3 sm:divide-x sm:divide-y-0"
+              className="mt-9 grid max-w-[520px] grid-cols-1 divide-y border-y sm:grid-cols-2 sm:divide-x sm:divide-y-0"
               style={{ borderColor: "var(--color-line)" }}
-              aria-label="Free consultation value"
+              aria-label="Free consultation details"
             >
               {[
-                {
-                  value: "$250",
-                  label: "Discovery call value",
-                  note: "Complimentary for your first conversation.",
-                },
                 {
                   value: "20 min",
                   label: "Focused review",

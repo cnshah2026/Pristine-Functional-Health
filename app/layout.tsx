@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteNav } from "@/components/nav/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { LeadPopup } from "@/components/lead-popup";
 import { JsonLd } from "@/components/seo/json-ld";
 import {
   absoluteUrl,
@@ -119,6 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteNav />
           <main className="relative">{children}</main>
           <SiteFooter />
+          <LeadPopup />
         </ThemeProvider>
       </body>
     </html>

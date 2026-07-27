@@ -2,6 +2,7 @@ import { Phone, Mail, Clock } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { CtaBand } from "@/components/sections/cta-band";
 import { FAQSection } from "@/components/sections/faq-section";
+import { LeadFormSection } from "@/components/sections/lead-form-section";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -93,27 +94,13 @@ export default function ContactPage() {
             ))}
           </div>
 
-          <Reveal className="mt-20 max-w-[860px]">
-            <div
-              className="border-t pt-8"
-              style={{ borderColor: "var(--color-line-strong)" }}
-            >
-              <p className="eyebrow mb-4">Prefer a direct note?</p>
-              <p className="lede max-w-[52ch]">
-                Email us at{" "}
-                <a
-                  href="mailto:contact@pristinefunctionalhealth.com"
-                  className="underline underline-offset-4 hover:text-[var(--color-forest)]"
-                >
-                  contact@pristinefunctionalhealth.com
-                </a>{" "}
-                with your question, or book the free discovery call if you want
-                the fastest path to a private conversation.
-              </p>
-            </div>
-          </Reveal>
         </div>
       </section>
+
+      <LeadFormSection
+        eyebrow="Send us a message"
+        title="Tell us what's going on."
+      />
 
       <FAQSection
         eyebrow="Before you reach out"

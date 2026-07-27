@@ -7,6 +7,7 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { AboutPreview } from "@/components/sections/about-preview";
 import { CtaBand } from "@/components/sections/cta-band";
 import { FAQSection } from "@/components/sections/faq-section";
+import { LeadFormSection } from "@/components/sections/lead-form-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Reveal } from "@/components/reveal";
 import { faqPageJsonLd } from "@/lib/faqs";
@@ -37,6 +38,12 @@ export default function HomePage() {
       <AboutPreview />
       <Testimonials />
       <FAQSection />
+      <LeadFormSection
+        id="contact-form"
+        eyebrow="Start a conversation"
+        title="Tell us what's going on."
+        background="var(--color-bone-2)"
+      />
       <CtaBand
         eyebrow="Book your free 20-minute call"
         title="You do not need a louder plan. You need the right questions."
