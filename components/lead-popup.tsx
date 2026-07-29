@@ -4,9 +4,41 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { X, ArrowRight, Phone, Check } from "lucide-react";
 
-const FIRST_DELAY_MS = 15_000; // 15s after first load
+const INITIAL_DELAY_MS = 15 * 60_000; // first appearance: 15 minutes into the session
 const REPEAT_MS = 5 * 60_000; // then every 5 minutes
+const NEXT_KEY = "pfh_popup_next"; // persisted timestamp of the next scheduled show
 const STOP_KEY = "pfh_popup_stopped"; // set once the visitor books, to stop nagging
+
+// The schedule lives in sessionStorage so it survives reloads and page
+// navigations — the popup follows one clock for the whole session instead
+// of restarting its countdown every time a page loads.
+function readStopped(): boolean {
+  try {
+    return sessionStorage.getItem(STOP_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function nextShowAt(): number {
+  try {
+    const stored = sessionStorage.getItem(NEXT_KEY);
+    if (stored) return Number(stored);
+    const next = Date.now() + INITIAL_DELAY_MS;
+    sessionStorage.setItem(NEXT_KEY, String(next));
+    return next;
+  } catch {
+    return Date.now() + INITIAL_DELAY_MS;
+  }
+}
+
+function setNextShowAt(ts: number) {
+  try {
+    sessionStorage.setItem(NEXT_KEY, String(ts));
+  } catch {
+    /* ignore */
+  }
+}
 
 const reasons = [
   "Fatigue",
@@ -28,20 +60,23 @@ export function LeadPopup() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  const schedule = useCallback((delay: number) => {
+  // Arm a timer for whenever the persisted schedule says the next show is due.
+  const schedule = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
-    try {
-      if (sessionStorage.getItem(STOP_KEY) === "1") return;
-    } catch {
-      /* ignore */
-    }
-    timerRef.current = setTimeout(() => setOpen(true), delay);
+    if (readStopped()) return;
+    const delay = Math.max(0, nextShowAt() - Date.now());
+    timerRef.current = setTimeout(() => {
+      // As soon as it shows, push the next show 5 minutes out and persist it —
+      // so a reload while it's open (or right after) won't re-trigger early.
+      setNextShowAt(Date.now() + REPEAT_MS);
+      setOpen(true);
+    }, delay);
   }, []);
 
-  // Dismiss (X / "maybe later" / backdrop / Esc) → come back in 5 minutes.
+  // Dismiss (X / "maybe later" / backdrop / Esc) → next show already persisted; re-arm.
   const dismiss = useCallback(() => {
     setOpen(false);
-    schedule(REPEAT_MS);
+    schedule();
   }, [schedule]);
 
   // Booked / called → stop popping for the rest of the session.
@@ -55,9 +90,9 @@ export function LeadPopup() {
     setOpen(false);
   }, []);
 
-  // First appearance 15s after load.
+  // Follow the persisted session schedule (survives reloads and navigations).
   useEffect(() => {
-    schedule(FIRST_DELAY_MS);
+    schedule();
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
@@ -83,7 +118,7 @@ export function LeadPopup() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end justify-center p-3 sm:items-center sm:p-4"
+      className="fixed inset-0 z-[300] flex items-end justify-center p-3 sm:items-center sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="lead-popup-title"
